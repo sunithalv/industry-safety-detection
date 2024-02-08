@@ -2,6 +2,7 @@ import os
 import sys
 from six.moves import urllib
 import zipfile
+import shutil
 from isd.logger import logging
 from isd.exception import isdException
 from isd.entity.config_entity import DataIngestionConfig
@@ -47,7 +48,20 @@ class DataIngestion:
         """
         try:
             feature_store_path = self.data_ingestion_config.feature_store_file_path
-            os.system(f"unzip {zip_file_path} -d {feature_store_path}")
+            #os.system(f"unzip {zip_file_path} -d {feature_store_path}")
+
+            with zipfile.ZipFile(zip_file_path, 'r') as zip_ref:
+                zip_ref.extractall(feature_store_path)
+            
+            # After extraction, move files to the specified feature store path from extracted parent folder
+            files = os.listdir(feature_store_path)
+            parent_folder_path=os.path.join(feature_store_path,files[0])
+            for file in os.listdir(parent_folder_path):
+                src = os.path.join(parent_folder_path, file)
+                dst = os.path.join(feature_store_path, os.path.basename(file))
+                shutil.move(src, dst)
+            #Remove the empty parent folder of zip file
+            os.rmdir(parent_folder_path)
             
             return feature_store_path
 

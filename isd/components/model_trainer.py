@@ -1,5 +1,6 @@
 import os,sys
 import yaml
+import shutil
 from isd.utils.main_utils import read_yaml_file
 from six.moves import urllib
 from isd.logger import logging
@@ -24,6 +25,16 @@ class ModelTrainer:
             logging.info("Unzipping data")
             os.system(f"unzip {DATA_INGESTION_S3_DATA_NAME}")
             os.system(f"rm {DATA_INGESTION_S3_DATA_NAME}")
+
+            #Copy the files to root folder from the unzip folder 
+            parent_folder_path=os.path.join(os.getcwd(),DATA_INGESTION_UNZIP_FOLDER)
+
+            for file in os.listdir(parent_folder_path):
+                src = os.path.join(parent_folder_path, file)
+                dst = os.getcwd()
+                shutil.move(src,dst)
+            #Remove the unzip folder
+            os.rmdir(parent_folder_path)
 
             #Prepare image path in txt file
             train_img_path = os.path.join(os.getcwd(),"images","train")

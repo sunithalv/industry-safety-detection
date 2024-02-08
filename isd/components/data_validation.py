@@ -27,9 +27,7 @@ class DataValidation:
     def validate_all_files_exist(self)-> bool:
         try:
             validation_status = None
-
             all_files = os.listdir(self.data_ingestion_artifact.feature_store_path)
-
             for file in all_files:
                 if file not in self.data_validation_config.required_file_list:
                     validation_status = False
@@ -61,6 +59,7 @@ class DataValidation:
             logging.info(f"Data validation artifact: {data_validation_artifact}")
 
             if status:
+                #Copy data to root folder for ease of training
                 shutil.copy(self.data_ingestion_artifact.data_zip_file_path, os.getcwd())
 
             return data_validation_artifact

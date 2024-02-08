@@ -19,9 +19,9 @@ Run the web app
 ```python
 python app.py
 ```
-To launch swagger ui
+To launch web page
 ```python
-http://localhost:5000/
+http://127.0.0.1:8080/
 ```
 
 **<center> NOTE: upload the photos with frontal face. </center>**
@@ -30,3 +30,7 @@ http://localhost:5000/
 1. computer vision
 2. yolov7 
 3. openCV 
+4. Docker
+5. AWS S3
+6. AWS ECR
+7. AWS EC2
