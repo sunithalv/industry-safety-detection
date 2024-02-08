@@ -36,7 +36,7 @@ class ModelPusher:
                 self.model_pusher_config.MODEL_BUCKET_NAME,
                 remove=False,
             )
-            logging.info("Uploaded best model to s3 bucket")
+            logging.info("Uploaded the best model to s3 bucket")
             logging.info("Exited initiate_model_pusher method of ModelTrainer class")
 
             # Saving the model pusher artifacts
